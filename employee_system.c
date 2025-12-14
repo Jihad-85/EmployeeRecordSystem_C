@@ -1,9 +1,8 @@
-#include <stdio.h>
+ #include <stdio.h>
 #include <string.h>
 
-const int MAX_EMP = 100;
-const int MAX_NAME_LEN = 50;
-const int MAX_POSi = 50;
+int max_emp = 100;
+int max_name = 50;
 
 //Structure Definition
 typedef struct {
@@ -15,7 +14,7 @@ typedef struct {
 
 
 Employee records[100];
-int employee_count = 0;
+int emp_count = 0;
 
 //Function
 void display_menu();
@@ -26,21 +25,21 @@ void update_employee();
 void delete_employee();
 
 void add_employee() {
-    if (employee_count >= MAX_EMP) {
+    if (emp_count >= max_emp) {
         printf("\n[Error] Maximum employee capacity reached.\n");
         return;
     }
 
     Employee new_emp;
 
-    printf("\n--- Add New Employee ---\n");
+    printf("\nAdd New Employee \n");
 
-    if (employee_count > 0) {
-        new_emp.id = records[employee_count - 1].id + 1;
+    if (emp_count > 0) {
+        new_emp.id = records[emp_count - 1].id + 1;
     } else {
         new_emp.id = 1001;
     }
-    printf("Generated Employee ID: %d\n", new_emp.id);
+    printf("Employee ID: %d\n", new_emp.id);
 
     printf("Enter Name (No spaces): ");
     scanf("%s", new_emp.name);
@@ -52,32 +51,32 @@ void add_employee() {
     scanf("%lf", &new_emp.salary);
 
 
-    records[employee_count] = new_emp;
-    employee_count++;
+    records[emp_count] = new_emp;
+    emp_count++;
 
     printf("\n[SUCCESS] Employee %s (ID: %d) added.\n", new_emp.name, new_emp.id);
 }
 
 
 void display_all() {
-    printf("\n--- All Employee Records (%d) ---\n", employee_count);
-    if (employee_count == 0) {
+    printf("\n--All Employee Records (%d) --\n", emp_count);
+    if (emp_count == 0) {
         printf("No records found.\n");
         return;
     }
 
-    printf("+------+--------------------+--------------------+-----------+\n");
-    printf("| ID   | Name               | Position           | Salary    |\n");
-    printf("+------+--------------------+--------------------+-----------+\n");
+    printf("\n");
+    printf("ID    Name               Position           Salary    \n");
+    printf("\n");
 
-    for (int i = 0; i < employee_count; i++) {
-        printf("| %-4d | %-18s | %-18s | $%-8.2lf |\n",
+    for (int i = 0; i < emp_count; i++) {
+        printf("%-4d  %-18s  %-18s  $%-8.2lf \n",
                records[i].id,
                records[i].name,
                records[i].position,
                records[i].salary);
     }
-    printf("+------+--------------------+--------------------+-----------+\n");
+    printf("\n");
 }
 
 
@@ -94,7 +93,7 @@ void search_employee() {
 
         printf("\nSearch Results:\n");
         int found = 0;
-        for (int i = 0; i < employee_count; i++) {
+        for (int i = 0; i < emp_count; i++) {
             if (records[i].id == search_id) {
                 printf("ID: %d, Name: %s, Position: %s, Salary: $%.2lf\n",
                        records[i].id, records[i].name, records[i].position, records[i].salary);
@@ -107,13 +106,13 @@ void search_employee() {
         }
 
     } else if (choice == 2) {
-        char search_name[MAX_NAME_LEN];
+        char search_name[max_name];
         printf("Enter EXACT Name to search (No spaces): ");
         scanf("%s", search_name);
 
         printf("\nSearch Results:\n");
         int found = 0;
-        for (int i = 0; i < employee_count; i++) {
+        for (int i = 0; i < emp_count; i++) {
             // Use simple string comparison (strcmp)
             if (strcmp(records[i].name, search_name) == 0) {
                 printf("ID: %d, Name: %s, Position: %s, Salary: $%.2lf\n",
@@ -138,7 +137,7 @@ void update_employee() {
     scanf("%d", &search_id);
 
     int index = -1;
-    for (int i = 0; i < employee_count; i++) {
+    for (int i = 0; i < emp_count; i++) {
         if (records[i].id == search_id) {
             index = i;
             break;
@@ -167,14 +166,14 @@ void update_employee() {
 
 void delete_employee() {
     int search_id;
-    printf("\n--- Delete Employee Record ---\n");
+    printf("\nDelete Employee Record\n");
     printf("Enter Employee ID to delete: ");
     scanf("%d", &search_id);
 
     int index_to_delete = -1;
 
 
-    for (int i = 0; i < employee_count; i++) {
+    for (int i = 0; i < emp_count; i++) {
         if (records[i].id == search_id) {
             index_to_delete = i;
             break;
@@ -187,28 +186,28 @@ void delete_employee() {
     }
 
 
-    for (int i = index_to_delete; i < employee_count - 1; i++) {
+    for (int i = index_to_delete; i < emp_count - 1; i++) {
         records[i] = records[i + 1];
     }
 
 
-    employee_count--;
+    emp_count--;
 
     printf("\n[SUCCESS] Employee ID %d successfully deleted.\n", search_id);
 }
 
 
 void display_menu() {
-    printf("\n============================================\n");
-    printf("       EMPLOYEE RECORD SYSTEM MENU          \n");
-    printf("============================================\n");
+    printf("\n");
+    printf("EMPLOYEE RECORD SYSTEM MENU\n");
+    printf("\n");
     printf("1. Add New Employee\n");
     printf("2. Display All Records\n");
     printf("3. Search Employee (by ID or Name)\n");
     printf("4. Update Employee Details\n");
     printf("5. Delete Employee\n");
     printf("0. Exit\n");
-    printf("--------------------------------------------\n");
+    printf("------\n");
     printf("Enter your choice: ");
 }
 
@@ -254,3 +253,4 @@ int main() {
 
     return 0;
 }
+
